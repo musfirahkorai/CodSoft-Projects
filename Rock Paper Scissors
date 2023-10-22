@@ -1,0 +1,60 @@
+import random
+
+# Initialize scores
+player1_score = 0
+player2_score = 0
+
+# Define a function to get a player's choice
+def get_player_choice(player):
+    while True:
+        player_choice = input(f"{player}, choose rock, paper, scissors, or a special move (e.g., fireball): ").lower()
+        if player_choice in ['rock', 'paper', 'scissors', 'fireball', 'thunderstrike']:
+            return player_choice
+        else:
+            print("Invalid choice. Please choose again.")
+
+# Define a function to determine the winner
+def determine_winner(player1_choice, player2_choice):
+    if player1_choice == player2_choice:
+        return "It's a tie!"
+    elif (
+        (player1_choice == 'rock' and player2_choice == 'scissors') or
+        (player1_choice == 'scissors' and player2_choice == 'paper') or
+        (player1_choice == 'paper' and player2_choice == 'rock') or
+        (player1_choice == 'fireball' and player2_choice != 'water') or
+        (player1_choice == 'thunderstrike' and player2_choice != 'rubber')
+    ):
+        return "Player 1 wins!"
+    else:
+        return "Player 2 wins!"
+
+# Main game loop
+while True:
+    player1_choice = get_player_choice("Player 1")
+    
+    # Check if it's a multiplayer game
+    multiplayer = input("Is this a multiplayer game? (yes/no): ").lower()
+    
+    if multiplayer == 'yes':
+        player2_choice = get_player_choice("Player 2")
+    else:
+        player2_choice = random.choice(['rock', 'paper', 'scissors', 'fireball', 'thunderstrike'])
+    
+    print(f"Player 1's choice: {player1_choice}")
+    print(f"Player 2's choice: {player2_choice}")
+
+    result = determine_winner(player1_choice, player2_choice)
+    print(result)
+
+    if result == "Player 1 wins!":
+        player1_score += 1
+    elif result == "Player 2 wins!":
+        player2_score += 1
+
+    print(f"Score - Player 1: {player1_score}, Player 2: {player2_score}")
+
+    play_again = input("Do you want to play again? (yes/no): ").lower()
+    if play_again != 'yes':
+        break
+
+print("Thanks for playing!")
